@@ -3,7 +3,10 @@ const InitialInvestment = ({ values, onChange }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     onChange({ [name]: Number(value) });
+
   };
+
+ 
 
   return (
     <div className='flex flex-wrap gap-4 w-full'>
