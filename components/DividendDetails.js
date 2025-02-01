@@ -1,10 +1,14 @@
 
 
-// components/InitialInvestment.js
+// components/DividendDetails.js
 const DividendDetails = ({ values, onChange }) => {
     const handleInputChange = (e) => {
       const { name, value } = e.target;
-      onChange({ [name]: Number(value) });
+      if (name === 'paymentFrequency') {
+        onChange({ [name]: value });           // Keep as string for dropdowns
+      } else {
+        onChange({ [name]: Number(value) });   // Convert to number for numerical inputs
+      }
     };
   
     return (

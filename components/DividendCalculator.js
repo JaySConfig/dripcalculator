@@ -27,6 +27,8 @@ function DividendCalculator() {
 
   });
 
+ 
+
   // initial count
 
   const [ results, setResults] = useState({
@@ -37,7 +39,14 @@ function DividendCalculator() {
   })
 
   const calculateResults = () => {
+
+
     const dividendYieldDecimal = calculatorState.dividendYield / 100;
+
+    const dividendGrowthDecimal = calculatorState.dividendGrowth / 100
+
+    const capitalGrowthDecimal = calculatorState.capitalAppreciation / 100 
+
     const paymentMultipliers = {
       'weekly': 52,
       'monthly': 12,
@@ -45,122 +54,83 @@ function DividendCalculator() {
       'semi-annually': 2,
       'annually': 1
     };
-  
+
+    // dividend requency
+
     const frequencyMultiplier = paymentMultipliers[calculatorState.paymentFrequency];
+
+    // recurring frequency 
+
     const recurringMultiplier = paymentMultipliers[calculatorState.recurringFrequency];
-  
+
+    // yearly dividend paymetn
+
+    const yearlyDividendPayment = calculatorState.initialInvestment * dividendYieldDecimal
+
+
+    //  recurring investments 
     let currentValue = calculatorState.initialInvestment;
-    let totalDividendsPaid = 0;
-  
-    for (let period = 0; period < calculatorState.timeHorizon * frequencyMultiplier; period++) {
-      // Add recurring investment based on frequency
-      if (period % (frequencyMultiplier / recurringMultiplier) === 0) {
-        currentValue += calculatorState.recurringAmount;
-      }
-      
-      // Calculate dividend
-      const periodDividend = (currentValue * dividendYieldDecimal) / frequencyMultiplier;
-      totalDividendsPaid += periodDividend;
-      
-      // Add dividend if reinvesting
-      if (calculatorState.reinvestDividends) {
-        currentValue += periodDividend;
-      }
+    let totalDividends = 0;
+    let capitalGrowth = 0;
+    
+    console.log("Starting with initial investment:", currentValue);
+    console.log("Yearly dividend payment:", yearlyDividendPayment);
+    console.log("Frequency multiplier:", frequencyMultiplier);
+
+
+    // loops through each year of the time horizon
+    
+    for (let year = 0; year < calculatorState.timeHorizon; year++){
+        console.log(`\nYear ${year + 1}:`);
+
+        let currentYearDividend = currentValue * dividendYieldDecimal
+
+        console.log("current year dividend", currentYearDividend)
+
+        // shows dividend payments per year based on the frequency 
+
+        for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++){
+
+            let dividendContribution = currentYearDividend / frequencyMultiplier;
+
+            console.log(`Dividend payment #${dividendPayment + 1}: ${dividendContribution}`);
+            
+            currentValue += dividendContribution;
+            totalDividends += dividendContribution;
+            
+            console.log(`After dividend payment - Current value: ${currentValue}`);
+        }
+
+        currentYearDividend = currentYearDividend * (1 + dividendGrowthDecimal)
+
+       
+    
+        for (let contribution = 0; contribution < recurringMultiplier; contribution++)
+        {
+            currentValue += calculatorState.recurringAmount
+
+            console.log(`Added contribution #${contribution + 1}: New value ${currentValue}`);
+
+        }
+
+        currentValue = currentValue * (1 + capitalGrowthDecimal)
+
     }
+
+    console.log("total dividends: ", totalDividends)
   
+    console.log("current value;", currentValue)
+    
+    
+    
+
     setResults({
-      totalValue: currentValue, 
-      totalDividends: totalDividendsPaid,
-      annualIncome: (currentValue * dividendYieldDecimal)
+      // totalValue: currentValue, 
+      // totalDividends: totalDividendsPaid,
+      // annualIncome: (currentValue * dividendYieldDecimal)
     });
   };
 
-
-  
-  // const calculateResults = () => {
-  //   const dividendYieldDecimal = calculatorState.dividendYield / 100;
-  //   const dividendGrowthDecimal = calculatorState.dividendGrowth / 100;
-  //   const capitalAppreciationDecimal = calculatorState.capitalAppreciation / 100;
-
-  //   // converts time to numbers 
-
-  //   const paymentMultipliers = {
-  //     'weekly': 52,
-  //     'monthly': 12,
-  //     'quarterly': 4,
-  //     'semi-annually': 2,
-  //     'annually': 1
-  //   };
-
-  //   // calculates dividend payments
-  //   const frequencyMultiplier = paymentMultipliers[calculatorState.paymentFrequency]
-  //   const DividendPayment = (calculatorState.initialInvestment * dividendYieldDecimal) / frequencyMultiplier
-
-  //   // calcualtes recurring payments
-
-  //   const recurringMultiplier = paymentMultipliers[calculatorState.recurringFrequency]
-  //   const recurringPayment = calculatorState.recurringAmount * recurringMultiplier
-
-  //   //  compounding calculations
-
-  //   let currentValue = calculatorState.initialInvestment;
-  //   let totalDividendsPaid = 0;
-
-  //   // for (let period = 0; period < calculatorState.timeHorizon * frequencyMultiplier; period++) {
-  //   //   // Add recurring investment if frequencies match
-  //   //   if (period % (frequencyMultiplier / recurringFrequency) === 0) {
-  //   //     currentValue += calculatorState.recurringAmount;
-  //   //   }
-  
-  //   //   // Calculate and reinvest dividend
-  //   //   const periodDividend = (currentValue * dividendYieldDecimal) / frequencyMultiplier;
-  //   //   totalDividendsPaid += periodDividend;
-  //   //   currentValue += periodDividend;
-  //   // }
-
-  //   console.log('Selected frequencies:', {
-  //     paymentFrequency: calculatorState.paymentFrequency,
-  //     recurringFrequency: calculatorState.recurringFrequency,
-  //     paymentMultiplier: frequencyMultiplier,
-  //     recurringMultiplier: recurringFrequency
-  //   });
-  
-
-  //   // console.log('Starting calculation with:', {
-  //   //   initialValue: currentValue,
-  //   //   recurringAmount: calculatorState.recurringAmount,
-  //   //   dividendFreq: frequencyMultiplier,
-  //   //   recurringFreq: recurringFrequency
-  //   // });
-
-  //   for (let period = 0; period < calculatorState.timeHorizon * frequencyMultiplier; period++) {
-  //     // Add recurring investment
-  //     currentValue += calculatorState.recurringAmount;
-      
-  //     // Calculate dividend
-  //     const periodDividend = (currentValue * dividendYieldDecimal) / frequencyMultiplier;
-  //     totalDividendsPaid += periodDividend;
-  //     currentValue += periodDividend;
-  //   }
-
-  //   console.log('Final values:', {
-  //     totalValue: currentValue,
-  //     totalDividends: totalDividendsPaid
-  //   });
-
-
-
-  //   //  calculates results
-
-  //   setResults({
-  //     totalValue: currentValue, 
-  //     totalDividends: totalDividendsPaid,
-  //     annualIncome: (currentValue * dividendYieldDecimal)
-  //   })
-
-    
-
-  // }
 
   useEffect(() => {
     calculateResults();

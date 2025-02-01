@@ -2,7 +2,11 @@
 const InitialInvestment = ({ values, onChange }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    onChange({ [name]: Number(value) });
+    if (name === 'recurringFrequency') {
+      onChange({ [name]: value });           // Keep as string for dropdowns
+    } else {
+      onChange({ [name]: Number(value) });   // Convert to number for numerical inputs
+    }
 
   };
 
