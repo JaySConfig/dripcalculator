@@ -5,7 +5,7 @@ import DividendDetails from './DividendDetails';
 import InitialInvestment from './InitialInvestment';
 import InvestmentParameters from './InvestmentParameters';
 import ResultsDisplay from './ResultsDisplay';
-
+import GraphContainer from './GraphContainer';
 
 
 function DividendCalculator() {
@@ -34,7 +34,8 @@ function DividendCalculator() {
   const [ results, setResults] = useState({
     totalValue: 0,
     totalDividends: 0,
-    annualIncome:0
+    annualIncome:0,
+    yearlyData: []
 
   })
 
@@ -72,6 +73,8 @@ function DividendCalculator() {
     let currentValue = calculatorState.initialInvestment;
     let totalDividends = 0;
     let capitalGrowth = 0;
+
+    let yearlyData = []; 
     
     console.log("Starting with initial investment:", currentValue);
     console.log("Yearly dividend payment:", yearlyDividendPayment);
@@ -89,20 +92,38 @@ function DividendCalculator() {
 
         // shows dividend payments per year based on the frequency 
 
-        for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++){
+        
+
+          for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++){
 
             let dividendContribution = currentYearDividend / frequencyMultiplier;
 
             console.log(`Dividend payment #${dividendPayment + 1}: ${dividendContribution}`);
+
+            if(calculatorState.reinvestDividends === true){
+              currentValue += dividendContribution;
+            }
             
-            currentValue += dividendContribution;
             totalDividends += dividendContribution;
             
             console.log(`After dividend payment - Current value: ${currentValue}`);
+
+            yearlyData.push({
+              year: year + 1,
+              portfolioValue: Number(currentValue.toFixed(2)),
+              dividends: Number(currentYearDividend.toFixed(2))
+            })
         }
+
+
+        
+
+        
+        // add yearly dividend growth
 
         currentYearDividend = currentYearDividend * (1 + dividendGrowthDecimal)
 
+        // adds recurring payments based on user input
        
     
         for (let contribution = 0; contribution < recurringMultiplier; contribution++)
@@ -120,15 +141,24 @@ function DividendCalculator() {
     console.log("total dividends: ", totalDividends)
   
     console.log("current value;", currentValue)
+
+    console.log("yearly data" , yearlyData)
     
     
     
 
+    // setResults({
+    //   totalValue: currentValue, 
+    //   totalDividends: totalDividends,
+    //   annualIncome: (currentValue * dividendYieldDecimal)
+    // });
+
     setResults({
-      // totalValue: currentValue, 
-      // totalDividends: totalDividendsPaid,
-      // annualIncome: (currentValue * dividendYieldDecimal)
-    });
+      totalValue: Number(currentValue.toFixed(2)).toLocaleString(), 
+      totalDividends: Number(totalDividends.toFixed(2)).toLocaleString(),
+      annualIncome: Number((currentValue * dividendYieldDecimal).toFixed(2)).toLocaleString(),
+      yearlyData: yearlyData
+  });
   };
 
 
@@ -171,7 +201,11 @@ function DividendCalculator() {
       </div>
 
       <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
-      <ResultsDisplay values={results} />
+       <ResultsDisplay values={results} />
+      </div>
+
+      <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
+        <GraphContainer data={results.yearlyData} />
       </div>
 
       

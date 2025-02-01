@@ -4,8 +4,17 @@
 const DividendDetails = ({ values, onChange }) => {
     const handleInputChange = (e) => {
       const { name, value } = e.target;
+
+      if (name === 'dividendYield' || name === 'dividendGrowth') {
+        // Clamp percentage between 0 and 25%
+        const percentage = Math.min(Math.max(Number(value), 0), 20);
+        onChange({ [name]: percentage });
+        return;
+    }
+
       if (name === 'paymentFrequency') {
-        onChange({ [name]: value });           // Keep as string for dropdowns
+        onChange({ [name]: value }); 
+                 // Keep as string for dropdowns
       } else {
         onChange({ [name]: Number(value) });   // Convert to number for numerical inputs
       }

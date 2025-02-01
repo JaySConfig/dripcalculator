@@ -4,6 +4,21 @@ const InvestmentParameters = ({ values, onChange }) => {
       const { name, value } = e.target;
       onChange({ [name]: Number(value) });
 
+      if (name === 'capitalAppreciation') {
+        // Clamp percentage between 0 and 25%
+        const percentage = Math.min(Math.max(Number(value), 0), 300);
+        onChange({ [name]: percentage });
+        return;
+    }
+
+
+      if (name === 'timeHorizon') {
+        // Clamp the value between 1 and 50
+        const timeHorizon = Math.min(Math.max(Number(value), 1), 50);
+        onChange({ [name]: timeHorizon });
+        return;
+    }
+
       if (name === 'reinvestDividends'){
         onChange({ [name]: value === 'true'});
       } else {
@@ -23,8 +38,8 @@ const InvestmentParameters = ({ values, onChange }) => {
             name="timeHorizon"
             value={values.timeHorizon}
             onChange={handleInputChange}
-            min="0"
-            max="100"
+            min="1"
+            max="50"
             className="border p-2 rounded text-black w-full"
           />
         </div>
