@@ -68,6 +68,8 @@ function DividendCalculator() {
 
     const yearlyDividendPayment = calculatorState.initialInvestment * dividendYieldDecimal
 
+    let nonReinvestedValue = calculatorState.initialInvestment;
+
 
     //  recurring investments 
     let currentValue = calculatorState.initialInvestment;
@@ -76,79 +78,122 @@ function DividendCalculator() {
 
     let yearlyData = []; 
     
-    console.log("Starting with initial investment:", currentValue);
-    console.log("Yearly dividend payment:", yearlyDividendPayment);
-    console.log("Frequency multiplier:", frequencyMultiplier);
+    // console.log("Starting with initial investment:", currentValue);
+    // console.log("Yearly dividend payment:", yearlyDividendPayment);
+    // console.log("Frequency multiplier:", frequencyMultiplier);
 
 
     // loops through each year of the time horizon
+
+    // ////////// ///// /// prior for loop
     
-    for (let year = 0; year < calculatorState.timeHorizon; year++){
-        console.log(`\nYear ${year + 1}:`);
+    // for (let year = 0; year < calculatorState.timeHorizon; year++){
+    //     // console.log(`\nYear ${year + 1}:`);
 
-        let currentYearDividend = currentValue * dividendYieldDecimal
+    //     let currentYearDividend = currentValue * dividendYieldDecimal
 
-        console.log("current year dividend", currentYearDividend)
 
-        // shows dividend payments per year based on the frequency 
+    //     // console.log("current year dividend", currentYearDividend)
 
-          for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++) {
-            let dividendContribution = currentYearDividend / frequencyMultiplier;
+    //     // shows dividend payments per year based on the frequency 
+
+    //       for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++) {
+    //         let dividendContribution = currentYearDividend / frequencyMultiplier;
             
-            if(calculatorState.reinvestDividends === true) {
-                // Calculate remaining portion of year for this payment to grow
-                let remainingPortionOfYear = (frequencyMultiplier - (dividendPayment + 1)) / frequencyMultiplier;
+    //         if(calculatorState.reinvestDividends === true) {
+    //             // Calculate remaining portion of year for this payment to grow
+    //             let remainingPortionOfYear = (frequencyMultiplier - (dividendPayment + 1)) / frequencyMultiplier;
                 
-                // Apply partial year of capital appreciation
-                dividendContribution *= (1 + (capitalGrowthDecimal * remainingPortionOfYear));
+    //             // Apply partial year of capital appreciation
+    //             dividendContribution *= (1 + (capitalGrowthDecimal * remainingPortionOfYear));
                 
-                currentValue += dividendContribution;
-            }
+    //             currentValue += dividendContribution;
+    //         }
             
-            totalDividends += dividendContribution;
+    //         totalDividends += dividendContribution;
 
-            console.log(`After dividend payment - Current value: ${currentValue}`);
+    //         // console.log(`After dividend payment - Current value: ${currentValue}`);
 
-              yearlyData.push({
-                year: year + 1,
-                portfolioValue: Number(currentValue.toFixed(2)),
-                dividends: Number(currentYearDividend.toFixed(2))
-              })
-        }
+    //     }
         
-        // add yearly dividend growth
+    //     // add yearly dividend growth
 
-        currentYearDividend = currentYearDividend * (1 + dividendGrowthDecimal)
+    //     currentYearDividend = currentYearDividend * (1 + dividendGrowthDecimal)
 
-        // adds recurring payments based on user input
+    //     // adds recurring payments based on user input
        
     
-        for (let contribution = 0; contribution < recurringMultiplier; contribution++)
-        {
-            currentValue += calculatorState.recurringAmount
+    //     for (let contribution = 0; contribution < recurringMultiplier; contribution++)
+    //     {
+    //         currentValue += calculatorState.recurringAmount
 
-            console.log(`Added contribution #${contribution + 1}: New value ${currentValue}`);
+    //         // console.log(`Added contribution #${contribution + 1}: New value ${currentValue}`);
 
+    //     }
+
+    //     // adds capital growth to current value
+
+    //     currentValue = currentValue * (1 + capitalGrowthDecimal)
+
+    //     // pushs data to array for graph 
+
+    //     yearlyData.push({
+    //       year: year + 1,
+    //       portfolioValue: Number(currentValue.toFixed(2)),
+    //       dividends: Number(currentYearDividend.toFixed(2))
+    //     })
+
+    // }
+
+    // console.log("total dividends: ", totalDividends)
+  
+    // console.log("current value;", currentValue)
+
+    // console.log("yearly data" , yearlyData)
+
+
+    // new loop // 
+
+
+  // Inside your loop
+  for (let year = 0; year < calculatorState.timeHorizon; year++) {
+    // Calculate dividends for both scenarios
+    let currentYearDividend = currentValue * dividendYieldDecimal;
+    let nonReinvestedYearDividend = nonReinvestedValue * dividendYieldDecimal;
+
+    // Process dividend payments
+    for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++) {
+        let dividendContribution = currentYearDividend / frequencyMultiplier;
+        let nonReinvestedDividendPayment = nonReinvestedYearDividend / frequencyMultiplier;
+        
+        // Only add dividends back to currentValue if reinvesting
+        if(calculatorState.reinvestDividends === true) {
+            currentValue += dividendContribution;
         }
-
-        currentValue = currentValue * (1 + capitalGrowthDecimal)
-
+        // nonReinvestedValue never gets dividends added back
+        
+        totalDividends += dividendContribution;
     }
 
-    console.log("total dividends: ", totalDividends)
-  
-    console.log("current value;", currentValue)
+    // Add recurring contributions to both scenarios
+    for (let contribution = 0; contribution < recurringMultiplier; contribution++) {
+        currentValue += calculatorState.recurringAmount;
+        nonReinvestedValue += calculatorState.recurringAmount;
+    }
 
-    console.log("yearly data" , yearlyData)
-    
-    
-    
+    // Apply capital appreciation to both scenarios
+    currentValue = currentValue * (1 + capitalGrowthDecimal);
+    nonReinvestedValue = nonReinvestedValue * (1 + capitalGrowthDecimal);
 
-    // setResults({
-    //   totalValue: currentValue, 
-    //   totalDividends: totalDividends,
-    //   annualIncome: (currentValue * dividendYieldDecimal)
-    // });
+    // Store both values in yearlyData
+    yearlyData[year] = {
+        year: year + 1,
+        portfolioValue: Number(currentValue.toFixed(2)),
+        dividends: Number(currentYearDividend.toFixed(2)),
+        nonReinvestedValue: Number(nonReinvestedValue.toFixed(2))
+    };
+  }
+
 
     setResults({
       totalValue: Number(currentValue.toFixed(2)).toLocaleString(), 
