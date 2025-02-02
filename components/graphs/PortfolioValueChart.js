@@ -5,7 +5,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const PortfolioValueChart = ({ data }) => {
   return (
     <div className="h-96 w-full p-4">
-      <h3 className="text-lg font-semibold mb-4">Portfolio Value Over Time</h3>
+      <h3 className="text-lg font-semibold mb-2">Portfolio Value Over Time</h3>
       <ResponsiveContainer>
         <LineChart 
           data={data}
@@ -17,17 +17,27 @@ const PortfolioValueChart = ({ data }) => {
             opacity={0.2}
           />
           <XAxis 
+            className='font-semibold'
             dataKey="year"
             label={{ value: 'Year', position: 'bottom', offset: 0 }}
-            ticks={[1,2,3,4,5,6,7,8,9,10]}  // Force specific year ticks
+            ticks={Array.from({ length: data.length }, (_, i) => i + 1)}  // Dynamic ticks
+
           />
           <YAxis 
-            tickFormatter={(value) => `$${(value/1000).toFixed(0)}k`}  // Format as $Xk
+            tickFormatter={(value) => {
+              if (value >= 1000000) {
+                return `$${(value/1000000).toFixed(1)}M`;
+              } else if (value >= 1000) {
+                return `$${(value/1000).toFixed(0)}K`;
+              }
+              return `$${value}`;
+            }}
+            className="font-semibold"
             label={{ 
               value: 'Portfolio Value', 
               angle: -90, 
               position: 'left',
-              offset: 10
+              offset: 10,
             }}
           />
           <Tooltip 
@@ -35,7 +45,7 @@ const PortfolioValueChart = ({ data }) => {
             contentStyle={{ backgroundColor: 'white', borderRadius: '8px' }}
           />
           <Line 
-            type="monotone" 
+            type="basis" 
             dataKey="portfolioValue" 
             stroke="#2563eb" 
             strokeWidth={3}

@@ -92,32 +92,29 @@ function DividendCalculator() {
 
         // shows dividend payments per year based on the frequency 
 
-        
-
-          for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++){
-
+          for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++) {
             let dividendContribution = currentYearDividend / frequencyMultiplier;
-
-            console.log(`Dividend payment #${dividendPayment + 1}: ${dividendContribution}`);
-
-            if(calculatorState.reinvestDividends === true){
-              currentValue += dividendContribution;
+            
+            if(calculatorState.reinvestDividends === true) {
+                // Calculate remaining portion of year for this payment to grow
+                let remainingPortionOfYear = (frequencyMultiplier - (dividendPayment + 1)) / frequencyMultiplier;
+                
+                // Apply partial year of capital appreciation
+                dividendContribution *= (1 + (capitalGrowthDecimal * remainingPortionOfYear));
+                
+                currentValue += dividendContribution;
             }
             
             totalDividends += dividendContribution;
-            
+
             console.log(`After dividend payment - Current value: ${currentValue}`);
 
-            yearlyData.push({
-              year: year + 1,
-              portfolioValue: Number(currentValue.toFixed(2)),
-              dividends: Number(currentYearDividend.toFixed(2))
-            })
+              yearlyData.push({
+                year: year + 1,
+                portfolioValue: Number(currentValue.toFixed(2)),
+                dividends: Number(currentYearDividend.toFixed(2))
+              })
         }
-
-
-        
-
         
         // add yearly dividend growth
 
