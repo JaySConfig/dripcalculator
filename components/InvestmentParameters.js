@@ -29,7 +29,7 @@ const InvestmentParameters = ({ values, onChange }) => {
     return (
       <div className='flex flex-wrap gap-4 w-full'>
         <div className="flex-1 min-w-[200px]">
-          <label htmlFor="timeHorizon" className="block mb-2">
+          <label htmlFor="timeHorizon" className="block mb-2 font-semibold">
             Time Horizon (Years)
           </label>
           <input
@@ -45,7 +45,7 @@ const InvestmentParameters = ({ values, onChange }) => {
         </div>
   
         <div className="flex-1 min-w-[200px]">
-          <label htmlFor="capitalAppreciation" className="block mb-2">
+          <label htmlFor="capitalAppreciation" className="block mb-2 font-semibold">
             Stock Price Growth
           </label>
           <input
@@ -61,7 +61,7 @@ const InvestmentParameters = ({ values, onChange }) => {
         </div>
   
         <div className="flex-1 min-w-[200px]">
-          <label htmlFor="reinvestDividends" className="block mb-2">
+          <label htmlFor="reinvestDividends" className="block mb-2 font-semibold">
             Reinvest Dividends
           </label>
           <select

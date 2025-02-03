@@ -15,7 +15,7 @@ const InitialInvestment = ({ values, onChange }) => {
   return (
     <div className='flex flex-wrap gap-4 w-full'>
       <div className="flex-1 min-w-[200px]">
-        <label htmlFor="initialInvestment" className="block mb-2">
+        <label htmlFor="initialInvestment" className="block mb-2 font-semibold">
           Initial Investment ($)
         </label>
         <input
@@ -30,7 +30,7 @@ const InitialInvestment = ({ values, onChange }) => {
       </div>
 
       <div className="flex-1 min-w-[200px]">
-        <label htmlFor="recurringAmount" className="block mb-2">
+        <label htmlFor="recurringAmount" className="block mb-2 font-semibold">
           Recurring Investment ($)
         </label>
         <input
@@ -45,7 +45,7 @@ const InitialInvestment = ({ values, onChange }) => {
       </div>
 
       <div className="flex-1 min-w-[200px]">
-        <label htmlFor="recurringFrequency" className="block mb-2">
+        <label htmlFor="recurringFrequency" className="block mb-2 font-semibold">
           Recurring Frequency
         </label>
         <select

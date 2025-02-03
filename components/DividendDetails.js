@@ -23,7 +23,7 @@ const DividendDetails = ({ values, onChange }) => {
     return (
         <div className='flex flex-wrap gap-4 w-full '>
         <div className="flex-1 min-w-[200px]">
-          <label htmlFor="dividendYield" className="block mb-2">  
+          <label htmlFor="dividendYield" className="block mb-2 font-semibold">  
             Dividend Yield
           </label>
           <input
@@ -39,7 +39,7 @@ const DividendDetails = ({ values, onChange }) => {
         </div>
   
         <div className="flex-1 min-w-[200px]">
-          <label htmlFor="dividendGrowth" className="block mb-2">
+          <label htmlFor="dividendGrowth" className="block mb-2 font-semibold">
             Dividend Growth Rate
           </label>
           <input
@@ -55,7 +55,7 @@ const DividendDetails = ({ values, onChange }) => {
         </div>
   
         <div className="flex-1 min-w-[200px]">
-          <label htmlFor="paymentFrequency" className="block mb-2">
+          <label htmlFor="paymentFrequency" className="block mb-2 font-semibold">
            Payment Frequency
           </label>
           <select

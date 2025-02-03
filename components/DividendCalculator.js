@@ -6,6 +6,8 @@ import InitialInvestment from './InitialInvestment';
 import InvestmentParameters from './InvestmentParameters';
 import ResultsDisplay from './ResultsDisplay';
 import GraphContainer from './GraphContainer';
+import HowToGuide from './HowToGuide';
+import FAQ from './FAQ';
 
 
 function DividendCalculator() {
@@ -85,71 +87,6 @@ function DividendCalculator() {
 
     // loops through each year of the time horizon
 
-    // ////////// ///// /// prior for loop
-    
-    // for (let year = 0; year < calculatorState.timeHorizon; year++){
-    //     // console.log(`\nYear ${year + 1}:`);
-
-    //     let currentYearDividend = currentValue * dividendYieldDecimal
-
-
-    //     // console.log("current year dividend", currentYearDividend)
-
-    //     // shows dividend payments per year based on the frequency 
-
-    //       for (let dividendPayment = 0; dividendPayment < frequencyMultiplier; dividendPayment++) {
-    //         let dividendContribution = currentYearDividend / frequencyMultiplier;
-            
-    //         if(calculatorState.reinvestDividends === true) {
-    //             // Calculate remaining portion of year for this payment to grow
-    //             let remainingPortionOfYear = (frequencyMultiplier - (dividendPayment + 1)) / frequencyMultiplier;
-                
-    //             // Apply partial year of capital appreciation
-    //             dividendContribution *= (1 + (capitalGrowthDecimal * remainingPortionOfYear));
-                
-    //             currentValue += dividendContribution;
-    //         }
-            
-    //         totalDividends += dividendContribution;
-
-    //         // console.log(`After dividend payment - Current value: ${currentValue}`);
-
-    //     }
-        
-    //     // add yearly dividend growth
-
-    //     currentYearDividend = currentYearDividend * (1 + dividendGrowthDecimal)
-
-    //     // adds recurring payments based on user input
-       
-    
-    //     for (let contribution = 0; contribution < recurringMultiplier; contribution++)
-    //     {
-    //         currentValue += calculatorState.recurringAmount
-
-    //         // console.log(`Added contribution #${contribution + 1}: New value ${currentValue}`);
-
-    //     }
-
-    //     // adds capital growth to current value
-
-    //     currentValue = currentValue * (1 + capitalGrowthDecimal)
-
-    //     // pushs data to array for graph 
-
-    //     yearlyData.push({
-    //       year: year + 1,
-    //       portfolioValue: Number(currentValue.toFixed(2)),
-    //       dividends: Number(currentYearDividend.toFixed(2))
-    //     })
-
-    // }
-
-    // console.log("total dividends: ", totalDividends)
-  
-    // console.log("current value;", currentValue)
-
-    // console.log("yearly data" , yearlyData)
 
 
     // new loop // 
@@ -219,7 +156,13 @@ function DividendCalculator() {
   };
 
   return (
+    
     <section className='max-w-6xl mx-auto p-4 mt-12 bg-base-100 text-black'>
+
+    <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
+          <HowToGuide />
+    </div>
+
       <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
       <InitialInvestment 
       
@@ -248,6 +191,10 @@ function DividendCalculator() {
 
       <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
         <GraphContainer data={results.yearlyData} />
+      </div>
+
+      <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
+         <FAQ />
       </div>
 
       

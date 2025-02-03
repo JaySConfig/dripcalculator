@@ -17,11 +17,6 @@ const ResultsDisplay = ({ values }) => {
                 <p className="text-2xl">${values.totalDividends || 0}</p>
             </div> 
 
-            <div className="flex-1 min-w-[200]px p-4 border rounded">
-                <h3 className="font-semibold">Annual Dividend Income</h3>
-                <p className="text-2xl">${values.annualIncome || 0}</p>
-            </div> 
-
         </div>
     );
 };

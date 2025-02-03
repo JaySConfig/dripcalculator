@@ -4,7 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const PortfolioValueChart = ({ data }) => {
   return (
-    <div className="h-96 w-full p-4">
+    <div className="h-96 w-full p-4 mb-8">
       <h3 className="text-lg font-semibold mb-2">Portfolio Value Over Time</h3>
       <ResponsiveContainer>
         <LineChart 
@@ -18,6 +18,7 @@ const PortfolioValueChart = ({ data }) => {
           />
           <XAxis 
             className='font-semibold'
+            
             dataKey="year"
             label={{ value: 'Year', position: 'bottom', offset: 0 }}
             ticks={Array.from({ length: data.length }, (_, i) => i + 1)}  // Dynamic ticks
@@ -32,7 +33,7 @@ const PortfolioValueChart = ({ data }) => {
               }
               return `$${value}`;
             }}
-            className="font-semibold"
+            className="font-semibold text-black"
             label={{ 
               value: 'Portfolio Value', 
               angle: -90, 

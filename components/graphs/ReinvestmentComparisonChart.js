@@ -5,7 +5,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const ReinvestmentComparisonChart = ({ data }) => {
   return (
-    <div className="h-96 w-full p-4">
+    <div className="h-96 w-full p-4 mb-8">
       <h3 className="text-lg font-semibold mb-2">Comparison Chart</h3>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart 
