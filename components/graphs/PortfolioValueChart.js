@@ -4,8 +4,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const PortfolioValueChart = ({ data }) => {
   return (
-    <div className="h-96 w-full p-4 mb-8">
+    <div className="h-96 w-full p-4 mb-8 overflow-x-auto">
       <h3 className="text-lg font-semibold mb-2">Portfolio Value Over Time</h3>
+      <div className='min-w-[320px] h-full'>
       <ResponsiveContainer>
         <LineChart 
           data={data}
@@ -54,6 +55,7 @@ const PortfolioValueChart = ({ data }) => {
           />
         </LineChart>
       </ResponsiveContainer>
+    </div>
     </div>
   );
 };

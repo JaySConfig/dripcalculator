@@ -5,8 +5,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const DividendIncomeChart = ({ data }) => {
   return (
-    <div className="h-96 w-full p-4 mb-8">
+    <div className="h-96 w-full p-4 mb-8 overflow-x-auto">
       <h3 className="text-lg font-semibold mb-2">Yearly Dividend Over Time</h3>
+      <div className='min-w-[320] h-full'>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart 
           data={data}
@@ -53,6 +54,7 @@ const DividendIncomeChart = ({ data }) => {
             />
         </LineChart>
       </ResponsiveContainer>
+    </div>
     </div>
   );
 };
