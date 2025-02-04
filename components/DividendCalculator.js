@@ -1,6 +1,6 @@
 // components/DividendCalculator.js
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import DividendDetails from './DividendDetails';
 import InitialInvestment from './InitialInvestment';
 import InvestmentParameters from './InvestmentParameters';
@@ -41,7 +41,7 @@ function DividendCalculator() {
 
   })
 
-  const calculateResults = () => {
+  const calculateResults = useCallback(() => {
 
 
     const dividendYieldDecimal = calculatorState.dividendYield / 100;
@@ -138,7 +138,7 @@ function DividendCalculator() {
       annualIncome: Number((currentValue * dividendYieldDecimal).toFixed(2)).toLocaleString(),
       yearlyData: yearlyData
   });
-  };
+  }, [calculatorState]);
 
 
   useEffect(() => {
