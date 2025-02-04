@@ -15,7 +15,6 @@ const DividendIncomeChart = ({ data }) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis 
             className='font-semibold'
-            style={{ fill: 'black' }}
             dataKey="year"
             label={{ value: 'Year', position: 'bottom', offset: 0 }}
             ticks={Array.from({ length: data.length }, (_, i) => i + 1)}  // Dynamic ticks

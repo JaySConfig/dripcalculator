@@ -18,7 +18,6 @@ const PortfolioValueChart = ({ data }) => {
           />
           <XAxis 
             className='font-semibold'
-            
             dataKey="year"
             label={{ value: 'Year', position: 'bottom', offset: 0 }}
             ticks={Array.from({ length: data.length }, (_, i) => i + 1)}  // Dynamic ticks
