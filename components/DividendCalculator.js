@@ -185,12 +185,14 @@ function DividendCalculator() {
     
       </div>
 
-      <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
-       <ResultsDisplay values={results} />
-      </div>
+      
 
       <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
         <GraphContainer data={results.yearlyData} />
+      </div>
+
+      <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>
+       <ResultsDisplay values={results} />
       </div>
 
       <div className='bg-white shadow-lg rounded-lg p-6 mb-6 border border-gray-300'>

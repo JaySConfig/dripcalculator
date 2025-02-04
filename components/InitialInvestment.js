@@ -3,9 +3,18 @@ const InitialInvestment = ({ values, onChange }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === 'recurringFrequency') {
-      onChange({ [name]: value });           // Keep as string for dropdowns
+      onChange({ [name]: value });  // Keep as string for dropdowns
     } else {
-      onChange({ [name]: Number(value) });   // Convert to number for numerical inputs
+      // For number inputs (initialInvestment and recurringAmount)
+      if (value === '') {
+        // Allow empty value temporarily
+        onChange({ [name]: 0 });  // or whatever minimum value you want
+      } else {
+        const numValue = Number(value);
+        if (!isNaN(numValue)) {
+          onChange({ [name]: numValue });
+        }
+      }
     }
 
   };
@@ -22,9 +31,9 @@ const InitialInvestment = ({ values, onChange }) => {
           type="number"
           id="initialInvestment"
           name="initialInvestment"
-          value={values.initialInvestment}
+          value={values.initialInvestment === 0 ? '' : values.initialInvestment}  // Show empty string if 0
+
           onChange={handleInputChange}
-          min="0"
           className="border p-2 rounded text-black w-full"
         />
       </div>
@@ -37,9 +46,10 @@ const InitialInvestment = ({ values, onChange }) => {
           type="number"
           id="recurringAmount"
           name="recurringAmount"
-          value={values.recurringAmount}
+          value={values.recurringAmount === 0 ? '' : values.recurringAmount}  // Show empty string if 0
+
           onChange={handleInputChange}
-          min="0"
+          // min="0"
           className="border p-2 rounded text-black w-full"
         />
       </div>
