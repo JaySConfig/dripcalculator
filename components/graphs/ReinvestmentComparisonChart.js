@@ -44,7 +44,7 @@ const ReinvestmentComparisonChart = ({ data }) => {
                 formatter={(value) => [`$${value.toLocaleString()}`, 'Portfolio Value']}
                 contentStyle={{ backgroundColor: 'white', borderRadius: '8px' }}
             />
-            <Legend 
+            <Legend className='mb-4'
                 align="right"  // Position horizontally: "left", "center", "right"
                 verticalAlign="top"  // Position vertically: "top", "middle", "bottom"
                 layout="horizontal"  // "horizontal" or "vertical"
